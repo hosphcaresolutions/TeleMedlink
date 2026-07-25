@@ -302,11 +302,11 @@ tbody tr:nth-child(even) {
 }
 
 .img-1 {
-    background-image: url("/static/img/logo.jpeg");
+    background-image: url("/static/img/logo.png");
 }
 
 .img-2 {
-    background-image: url("/static/img/logo.jpeg");
+    background-image: url("/static/img/logo.png");
 }
 
 .img-3 {
@@ -359,7 +359,7 @@ tbody tr:nth-child(even) {
     border: 3px solid #efefef;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("/static/img/logo.jpeg");
+    background-image: url("/static/img/logo.png");
     margin-right: .7rem;
 }
 
