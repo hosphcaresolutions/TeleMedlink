@@ -2296,7 +2296,7 @@ html.menu-opened body {
     width: 240px;
 }
 .search-location .form-control {
-	background: #fff url(../img/location.png) no-repeat 10px center;
+	background: #fff;
 }
 .search-box .search-info {
     -ms-flex: 0 0 490px;
@@ -2306,7 +2306,7 @@ html.menu-opened body {
     width: 490px;
 }
 .search-info .form-control {
-	background: #fff url(../img/search.png) no-repeat 10px center;
+	background: #fff;
 }
 .search-box .search-btn {
     width: 46px;
