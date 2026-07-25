@@ -1,0 +1,5 @@
+# Production-only dependencies for Render.
+dj-database-url==2.3.0
+django-jazzmin==3.0.1
+gunicorn==23.0.0
+sendgrid==6.12.0

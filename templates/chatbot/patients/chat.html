@@ -1,0 +1,79 @@
+{% extends 'chatbot/patients/base.html' %}
+{% load static %}
+
+{% block title %} Chat bot {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4">Chat bot</h3>
+    <div id="chat-container">
+        <div id="chat-box">
+            <!-- User and bot messages will be added here -->
+        </div>
+        <div id="loading-indicator" style="display: none;">
+            <span class="dots"></span><span class="dots"></span><span class="dots"></span>
+        </div>
+        <form id="chat-form" class="mt-3 d-flex">
+            <input type="text" id="question" name="question" class="form-control me-2" required placeholder="Ask a question...">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .chat-box {
+        background-color: #007bff; /* Bootstrap primary blue */
+        color: white;               /* Make text white for better contrast */
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+</style>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#chat-form").on("submit", function (event) {
+            event.preventDefault();
+            const question = $("#question").val();
+
+            // Show user message
+            $("#chat-box").append(`<div class="message user-message alert alert-primary mt-2">${question}</div>`);
+            $("#question").val("");
+
+            // Show loading indicator
+            $("#loading-indicator").show();
+
+            $.ajax({
+                url: "/chatbot/ask/",
+                method: "POST",
+                data: {
+                    question: question,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    // Hide loading indicator
+                    $("#loading-indicator").hide();
+
+                    // Show bot response
+                    $("#chat-box").append(`<div class="message bot-message alert alert-secondary mt-2">${response.answer}</div>`);
+                },
+                error: function () {
+                    $("#loading-indicator").hide();
+                    $("#chat-box").append(`<div class="message bot-message alert alert-danger mt-2">An error occurred. Please try again.</div>`);
+                    scrollToBottom();
+                }
+            });
+            // Function to scroll to the bottom of the chat box
+            function scrollToBottom() {
+                const chatBox = document.getElementById("chat-box");
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+        });
+    });
+</script>
+{% endblock %}

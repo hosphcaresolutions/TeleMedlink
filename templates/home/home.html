@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TelemedLink</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon -->
+    <!-- <link rel="icon" href="{% static 'images/favicon.ico' %}"> -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/icon_app.png' %}">
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="TelemedLink logo" class="img-fluid" style="max-width: 170px;" />
+
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}" class="active">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact-us">Contact Us</a></li>
+        </ul>
+        <div class="auth-buttons">
+                <a href="{% url 'users:login' %}" class="btn btn-primary">Log in/Register</a>
+            
+            {% comment %}
+            <a href="#" class="btn btn-outline">Login/Signup</a>
+            
+            <a href="{% url 'users:login' %}" class="btn btn-primary">Login/Sign Up</a>
+            {% endcomment %}
+        </div>
+        {% comment %}
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        {% endcomment %}
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Book Your Appointment Today<br> With Your Doctor.</h1>
+            <p class="subtitle">Connect with doctors instantly and Book Appointment and get diagnosed, treated, and prescribed.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'users:login' %}" class="btn btn-primary">
+                    <i class="fas fa-calendar-alt"></i> Book Appointment
+                </a>
+                {%comment%}
+                <a href="#" class="btn btn-outline">
+                    <i class="fas fa-ambulance"></i> Emergency Help
+                </a>
+                {%endcomment%}
+            </div>
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Meet Your Doctor at Our Trusted Facility</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-user-md"></i>
+                    <span>10+ Certified Doctors</span>
+                </div>
+            </div>
+        </div>
+        <!-- section for system images-->
+        <div class="hero-image">
+            <img src="{% static 'img/bondo.jpg' %}" alt="Doctor consultation" class="main-image">
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Same-day appointments available</p>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-clock"></i>
+                    <p>Average wait time: <strong>5 mins</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-tittle">
+            <h2>Our Comprehensive Features</h2>
+            
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>Booking Appointment</h3>
+                <p>High-quality appoinments with board-certified doctors for diagnosis and treatment.</p>
+                <!--<a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Symptom Checker</h3>
+                <p>Our intelligent chatbot provides preliminary diagnosis before you see a doctor.</p>
+                <!--<a href="#" class="feature-link">Try it now <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <h3>Doctor Prescriptions</h3>
+                <p>Get prescriptions after a set appointment with one of our Doctors, and receive treatment in our Hospital.<br> TeleMedLink serves the community.</p>
+                <!--<a href="#" class="feature-link">How it works <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3>Medical Records and Reports</h3>
+                <p>Securely store and access your medical history and visit summaries.</p>
+                <!--<a href="#" class="feature-link">View demo <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Emergency Calls</h3>
+                <p>Connect  with our Hospital through emergency calls. We are available 24/7. Reach out to us through our phonenumber incase of an emmegency</p>
+                <!--<a href="#" class="feature-link">Supported devices <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>FAQs and Patient location</h3>
+                <p>Frequesntly asked questions and location of patients is shown</p>
+                <!--<a href="#" class="feature-link">Join community <i class="fas fa-arrow-right"></i></a>-->
+            </div>
+        </div>
+    </section>
+
+ <!-- About Us Section -->
+ <section class="about-us" id="about-us">
+    <div class="section-title">
+        <h2>About TelemedLink</h2>
+        <p>Your trusted partner in accessible healthcare</p>
+    </div>
+    <div class="about-content">
+        <div class="about-image">
+            <img src="{% static 'img/aboutus.jpg' %}" alt="Our medical team">
+        </div>
+        <div class="about-text">
+            <h3>Our Mission</h3>
+            <p>TelemedLink was founded with a simple goal: to make quality healthcare accessible to everyone in Kenya. We believe that distance should never be a barrier to receiving excellent medical care.</p>
+            
+            <h3>Our Story</h3>
+            <p>Established in 2025 by a team of healthcare professionals and technology experts, TelemedLink has grown from a small startup to a trusted healthcare platform serving thousands of patients across Kenya.</p>
+            
+            <h3>Our Team</h3>
+            <p>We are proud to work with over 10 certified doctors and healthcare specialists who are committed to providing compassionate, personalized care to every patient.</p>
+            
+            <div class="about-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Patients Served</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Certified Doctors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Availability</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-tite">
+            <h2>What Our Patients Say</h2>
+            
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-card active">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="testimonial-text">"The AI symptom checker accurately identified my condition before my  consultation. The doctor confirmed the diagnosis and prescribed medication that was ready at the local pharmacy within an hour."</p>
+                <div class="testimonial-author">
+                    <img src="{% static 'img/doctor-male.jpg' %}" alt="Patient" class="author-image">
+                    <div class="author-details">
+                        <h4>DR. MOSES </h4>
+                        <p class="author-title">Juja</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="testimonial-text">"As a mother with young children, TeleMedLink has been a lifesaver. I can book doctor appointments without leaving home, and the emergency alert feature gives me peace of mind."</p>
+                <div class="testimonial-author">
+                    <img src="{% static 'img/doctor-female.jpg' %}" alt="Patient" class="author-image">
+                    <div class="author-details">
+                        <h4>Sarah Wambui</h4>
+                        <p class="author-title">Juja area 2</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="testimonial-text">"The prescription service is incredibly convenient. My chronic medication is automatically refilled each month and timely doctor consultations."</p>
+                <div class="testimonial-author">
+                    <img src="{% static 'img/doctor male-2.jpg' %}" alt="Patient" class="author-image">
+                    <div class="author-details">
+                        <h4>David Omondi</h4>
+                        <p class="author-title">Ruiru</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- section for slider controls -->
+            <div class="slider-controls">
+                <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                
+                <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+<section class="contact-us" id="contact-us">
+    <div class="section-title">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Reach out with any questions or concerns.</p>
+    </div>
+    <div class="contact-container">
+        <div class="contact-info">
+            <p><i class="fas fa-phone-alt"></i> +254 708 506 827</p>
+            <p><i class="fas fa-envelope"></i> help@TelemedLink.co.ke</p>
+            <p><i class="fas fa-map-marker-alt"></i> JKUAT University, Juja</p>
+        </div>
+        <form class="contact-form" method="POST" action=""{% url 'contact' %}"">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            
+        </form>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        
+    </div>
+</section>
+
+
+    
+
+    
+    
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="{% static 'img/white-logo.png' %}" alt=" VCIS logo" class="img-fluid" style="max-width: 170px;" />
+
+                </div>
+                <p class="footer-about">TelemedLink- Revolutionizing healthcare access in Kenya through innovative technology.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <!-- footer column -->
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">AI Symptom Checker</a></li>
+                    <li><a href="#">Emergency Calls</a></li>
+                    <li><a href="#">Doctor comments</a></li>
+                    
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Doctors</a></li>
+                    <li><a href="#">chatbot</a></li>
+                    <li><a href="#">Documents</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <div class="footer-contact">
+                    <p><i class="fas fa-envelope"></i> help@TelemedLink.co.ke</p>
+                    <p><i class="fas fa-phone-alt"></i> +254 708 506 827</p>
+                    <p><i class="fas fa-map-marker-alt"></i> JKUAT University, Juja</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TelemedLink. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/home.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

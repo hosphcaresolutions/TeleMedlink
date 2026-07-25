@@ -1,0 +1,41 @@
+{% extends 'patients/base.html' %}
+{% load static %}
+
+{% block title %}Documents{% endblock %}
+{% block page_title %}My Documents{% endblock %}
+
+{% block content %}
+<main class="container mt-4">
+    <h2 class="mb-4">My Appointment Records</h2>
+    <a href="{% url 'patients:download_appointments' %}" class="btn btn-success mb-3">Download as PDF</a>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Doctor</th>
+                    <th>Status</th>
+                    <th>Summary</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.start_date }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>Dr. {{ appointment.doctor.user.get_full_name }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>{{ appointment.summary }}</td>
+                    <td>{{ appointment.comment }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No appointments found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

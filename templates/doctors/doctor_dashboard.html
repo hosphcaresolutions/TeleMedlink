@@ -1,0 +1,476 @@
+{% extends 'doctors/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+{% block page_title %} Doctor Dashboard {% endblock page_title %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Welcome to Your Dashboard, Dr. {{ request.user.first_name }}</h2>
+
+  <!-- Statistics Cards -->
+  <div class="row text-white">
+
+    <div class="col-md-3 mb-4">
+      <div class="card bg-info shadow h-100">
+        <div class="card-body text-center">
+          <h5>Total Appointments</h5>
+          <h3>{{ total_appointments }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card bg-danger shadow h-100">
+        <div class="card-body text-center">
+          <h5>Cancelled Appointments</h5>
+          <h3>{{ cancelled_appointments }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card bg-warning shadow h-100">
+        <div class="card-body text-center">
+          <h5>Waiting Appointments</h5>
+          <h3>{{ waited_appointments }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Status -->
+  <div class="row mt-4">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">Appointment Status</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Accepted
+              <span class="badge bg-success">{{ accepted_appointments }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Waiting
+              <span class="badge bg-warning">{{ waited_appointments }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Cancelled
+              <span class="badge bg-danger">{{ cancelled_appointments }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments per Day -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">Appointments This Month</div>
+        <div class="card-body">
+          {% if appointments_per_day %}
+            <ul class="list-group ">
+              {% for day in appointments_per_day %}
+              <li class="list-group-item  d-flex justify-content-between align-items-center">
+                {{ day.start_date|date:"F j, Y" }}
+                <span class="badge bg-info ">{{ day.count }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No appointments this month.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts-->
+    <!-- Appointmade in a month chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="card shadow mt-4">
+      <div class="card-header bg-primary text-white">Appointments Chart</div>
+      <div class="card-body">
+        <canvas id="appointmentsChart" height="100"></canvas>
+      </div>
+    </div>
+    
+    <script>
+      const ctx = document.getElementById('appointmentsChart').getContext('2d');
+    
+      const chartData = {
+        labels: [
+          {% for day in appointments_per_day %}
+            "{{ day.start_date|date:'M d' }}",
+          {% endfor %}
+        ],
+        datasets: [{
+          label: 'Appointments',
+          data: [
+            {% for day in appointments_per_day %}
+              {{ day.count }},
+            {% endfor %}
+          ],
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          borderRadius: 5,
+        }]
+      };
+    
+      const config = {
+        type: 'bar',
+        data: chartData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                precision: 0
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      };
+    
+      new Chart(ctx, config);
+    </script>
+
+    <!-- Appointment status Chart -->
+    <div class="card shadow mt-4">
+      <div class="card-header bg-primary text-white">Appointments by Status</div>
+      <div class="card-body">
+        <canvas id="statusChart" height="100"></canvas>
+      </div>
+    </div>
+    
+    <script>
+      const statusCtx = document.getElementById('statusChart').getContext('2d');
+    
+      const statusLabels = [
+        {% for status in status_counts %}
+          "{{ status.status__status }}",
+        {% endfor %}
+      ];
+    
+      const statusData = [
+        {% for status in status_counts %}
+          {{ status.count }},
+        {% endfor %}
+      ];
+    
+      const statusChart = new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: statusLabels,
+          datasets: [{
+            label: 'Appointments by Status',
+            data: statusData,
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.7)',  // Accepted
+              'rgba(255, 99, 132, 0.7)',  // Cancelled
+              'rgba(255, 206, 86, 0.7)',  // Waited
+              'rgba(153, 102, 255, 0.7)'  // Other statuses if any
+            ],
+            borderColor: '#fff',
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    </script>
+    
+    
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+{% extends 'doctors/base.html' %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock title %}
+{% block page_title %} Doctor Dashboard {% endblock page_title %}
+
+{% block content %}
+<main>
+  {% comment %} <h2 class="dash-title">Doctor Dashboard</h2> {% endcomment %}
+  
+  {% comment %}
+  <div class="row justify-content-between">
+
+    <div class=" bg-light  p-2 shadow col-12 col-lg-4 mb-3" style="">
+      <h5 class="mt-2"><i class="ms-2 bi bi-briefcase-fill"></i> Today Appointments</h5>
+      <table class="table mt-4">
+          <thead>
+            <tr>
+              <th scope="col">P1</th>
+              <th scope="col">P2</th>
+              <th scope="col">P3</th>
+              <th scope="col">P4</th>
+              <th scope="col">P5</th>
+              <th scope="col">P6</th>
+              <th scope="col">P7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ap-1</td>
+              <td>Ap-1</td>
+              <td>--</td>
+              <td>Ap-1</td>
+              <td>Ap-1</td>
+              <td>--</td>
+              <td>Ap-1</td>
+              
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
+
+      <div class=" bg-light  p-2 shadow col-12 col-lg-4 mb-3">
+          <div>
+              <div class="d-flex justify-content-between">
+                  <h5 class="mt-2 mb-2"><i class="ms-2 bi bi-alarm-fill"></i> Reminder</h5>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn text-end" data-bs-toggle="modal" data-bs-target="#Remainder" >
+                      <i class="bi bi-calendar-plus  fs-5"></i>
+                  </button>
+              </div>
+            
+          </div>
+          
+  
+              <!-- Modal -->
+              <div class="modal fade" id="Remainder" tabindex="-1" aria-labelledby="Remainder" aria-hidden="true">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <div>  <h5 class="modal-title" id="exampleModalLabel">Add  Remainder</h5> </div>
+                          <div > <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                      </div>
+                      <form action="">
+                      <div class="modal-body">
+                              <div class="mb-3">
+                                  <label for="title" class="form-label"> <i class="bi bi-calendar"></i> Tittle</label>
+                                  <input type="text" class="form-control" id="title" placeholder="Enter Remainder title">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="date" class="form-label"> <i class="bi bi-calendar"></i> Date</label>
+                                  <input type="Date" class="form-control" id="date" aria-describedby="date">
+                              </div>
+
+                              <div class="form-floating">
+                                  <textarea class="form-control" placeholder="Leave a comment here" id="text" style="height: 100px"></textarea>
+                                  <label for="text">Comments</label>
+                              </div>
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Add</button>
+                      </div>
+                      </form>
+                  </div>
+                  </div>
+              </div>
+              <div style = "overflow-y: scroll; height: 130px;">
+                  <div class="alert " role="alert">
+                      <h6 class="alert-heading fw-bold">Remainder Tittle</h6>
+                      <p class="">This is a friendly reminder that you have an appointment with [Patient's Name] on [Date] at [Time].</p>
+                  </div>
+              </div>
+      </div>
+
+
+      <div class=" bg-light p-2  shadow col-12 col-lg-3 mb-3">
+          <h5 class="mt-2"><i class=" ms-2 bi bi-pie-chart-fill"></i> Details</h5>
+          <div class="summary-single">
+              <span class="ti-id-badge"></span>
+              <div>
+                  <h5>5</h5>
+                  <small>Number of Branches</small>
+              </div>
+          </div>
+          <div class="summary-single">
+              <span class="ti-face-smile"></span>
+              <div>
+                  <h5>12</h5>
+                  <small>Number of Patients</small>
+              </div>
+          </div>
+      </div>
+      
+  </div>
+    
+    
+    <section class="recent">
+        <div class="activity-grid">
+            <div class="activity-card">
+                <div>
+                    <canvas id="myChart"></canvas>
+                  </div>
+            </div>
+            
+            <div class="summary">
+              
+            
+                {% comment %}
+                <div class="bday-card shadow">
+                    <div class="bday-flex justify-content-between">
+                        <div class="col-3">
+                            <img src="https://missionvet.ca/wp-content/uploads/2020/01/User-Profile-PNG-1.png" class="img-fluid" style="width: 50px; border-radius: 50%;">
+                        </div>
+                        <div class="bday-info col-8 ">
+                            <h5>Doctor</h5>
+                            <small>Birthday Today</small><br>   
+                            <button class="btn btn-dark  btn-sm">
+                                <span class="ti-gift"></span>
+                                Wish him
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endcomment %}
+              
+            {% comment %}
+            </div>
+        </div>
+    </section>
+  {% endcomment %}
+
+
+
+
+    {% comment %}
+    <!-- Include Chart.js -->
+    <script id="monthly-data" type="application/json">
+      {{ monthly_data|safe }}
+    </script>
+    <script id="status-data" type="application/json">
+      {{ status_data|safe }}
+    </script>
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="appointmentsChart"></canvas>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="appointmentsPerMonth"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="appointmentsByStatus"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const monthlyLabels = {{ monthly_data|safe|json_script:"monthly-labels" }};
+      const monthlyCounts = {{ monthly_data|safe|json_script:"monthly-counts" }};
+      const statusLabels = {{ status_data|safe|json_script:"status-labels" }};
+      const statusCounts = {{ status_data|safe|json_script:"status-counts" }};
+    </script>
+
+    <script>
+      const monthlyData = JSON.parse(document.getElementById('monthly-labels').textContent);
+      const monthlyCounts = JSON.parse(document.getElementById('monthly-counts').textContent).map(m => m.count);
+      const monthLabels = monthlyData.map(m => `Month ${m.month}`);
+    
+      const ctx1 = document.getElementById('appointmentsPerMonth').getContext('2d');
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: monthLabels,
+          datasets: [{
+            label: 'Appointments per Month',
+            data: monthlyCounts,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+          }]
+        }
+      });
+    
+      const statusData = JSON.parse(document.getElementById('status-labels').textContent);
+      const statusCounts = JSON.parse(document.getElementById('status-counts').textContent).map(s => s.count);
+      const statusLabels = statusData.map(s => s['status__status']);
+    
+      const ctx2 = document.getElementById('appointmentsByStatus').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: statusLabels,
+          datasets: [{
+            label: 'Appointment Status',
+            data: statusCounts,
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+          }]
+        }
+      });
+    </script>
+    {% endcomment %}
+
+
+    {% comment %}
+    <!--graph scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+        ];
+      
+        const data = {
+          labels: labels,
+          datasets: [{
+            label: 'My Statistics',
+            backgroundColor: 'rgb(25, 9, 32)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+          }]
+        };
+      
+        const config = {
+          type: 'bar',
+          data: data,
+          options: {}
+        };
+    </script>
+      <script>
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      </script>
+
+    
+
+
+</main>
+{% endblock  %}
+{% endcomment %}

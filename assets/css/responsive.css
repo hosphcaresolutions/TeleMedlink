@@ -1,0 +1,174 @@
+/* static/css/responsive.css */
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .steps {
+        flex-direction: column;
+    }
+    
+    .step {
+        margin-bottom: 3rem;
+    }
+    
+    .step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: -1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 30px;
+        background-color: var(--primary-blue);
+    }
+
+    nav {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        margin-top: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links li {
+        margin: 0.5rem 0;
+    }
+
+    .logo {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .step {
+        min-width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .how-it-works {
+        padding: 3rem 5%;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+    
+    .steps-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .step {
+        min-width: 100%;
+    }
+}
+
+
+/* How It Works Section */
+@media (max-width: 480px) {
+    .how-it-works {
+        padding: 2rem 5%;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title p {
+        font-size: 1rem;
+    }
+}
+
+
+/* Testimonials */
+/* Responsive Design */
+@media (max-width: 992px) {
+    .testimonials {
+        padding: 4rem 5%;
+    }
+    
+    .testimonial-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-tite h2 {
+        font-size: 1.8rem;
+    }
+    
+    .testimonial-text {
+        font-size: 1rem;
+    }
+    
+    .author-image {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .slider-prev, .slider-next {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonials {
+        padding: 3rem 5%;
+    }
+    
+    .testimonial-slider {
+        padding: 0;
+    }
+    
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .slider-controls {
+        margin-top: 2rem;
+    }
+    
+    .quote-icon {
+        margin-bottom: 1rem;
+    }
+}

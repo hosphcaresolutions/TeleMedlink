@@ -1,0 +1,78 @@
+{% extends 'doctors/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">System Reports</h2>
+
+    <!-- Doctors Report -->
+    <h3>Doctors</h3>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Specialty</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ doctor.user.get_full_name }}</td>
+                <td>{{ doctor.user.email }}</td>
+                <td>{{ doctor.specialty.name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">No doctors available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Patients Report -->
+    <h3>Patients</h3>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Appointments</th>
+                <th>Times</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ patient.user.get_full_name }}</td>
+                <td>{{ patient.user.email }}</td>
+                <td>{{ patient.appointments.count }}</td>
+                <td>
+                    {% for appointment in patient.appointments.all %}
+                        {{ appointment.date_time|date:"M d, Y - H:i" }}<br>
+                    {% empty %}
+                        No Appointments
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for appointment in patient.appointments.all %}
+                        {{ appointment.status }}<br>
+                    {% empty %}
+                        No Status
+                    {% endfor %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">No patients available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Appointments</title></head>
+<body>
+<h2>Appointments Report</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for app in appointments %}
+        <tr>
+            <td>{{ app.patient.user.get_full_name }}</td>
+            <td>{{ app.doctor.user.get_full_name }}</td>
+            <td>{{ app.start_date }}</td>
+            <td>{{ app.time }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.comments }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

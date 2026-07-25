@@ -1,0 +1,33 @@
+{% extends 'patients/base.html' %}
+{% block title %}Documents{% endblock %}
+{% block content %}
+
+<h2>Generated Reports</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Report Type</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.get_report_type_display }}</td>
+            <td>{{ report.doctor }}</td>
+            <td>{{ report.created_at }}</td>
+            <td>
+                <a href="{% url 'generate_report' report.id %}" class="btn btn-primary">Download</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No reports available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
