@@ -3268,7 +3268,7 @@ button:focus {
   left: 0;
   top: 0;
   z-index: -1;
-  background: url("../img/home5/shap_tecture.png") no-repeat scroll center 0/cover;
+  background: none;
 }
 
 /*=============== saas banner area ================*/
